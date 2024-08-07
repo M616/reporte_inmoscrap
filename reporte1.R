@@ -1,4 +1,4 @@
-#Generar un reporte par la base inmoscrap que permita ver por 
+#Generar un reporte para la base inmoscrap que permita ver por 
 #plataforma y por ditrito el nivel de completitud de las variables.
 #Este reporte va a correr con una pre corrida del escraper, 
 #alrededor del 20 de cada
