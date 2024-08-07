@@ -9,22 +9,51 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+Generar un reporte para la base inmoscrap que permita ver por 
+plataforma y por ditrito el nivel de completitud de las variables.
+Este reporte va a correr con una pre corrida del escraper, 
+alrededor del 20 de cada
+mes.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(tidyverse)
+library(Rinmoscrap)
+library(googledrive)
 ```
 
-## Including Plots
+```{r message=FALSE, warning=FALSE, include=FALSE}
+temp <- tempfile()
 
-You can also embed plots, for example:
+drive_download(as_id(id_julio24),
+               path = temp , 
+               overwrite = TRUE)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+inmo <-  read_csv(temp)
+unlink(temp)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+#selecciono y muestro las columnas sobre las cuales se hará el reporte
+inmo <- 
+  inmo |> 
+  select(-`_validation`,
+         -advertiser_id,
+         -disposition,
+         -luminosity,
+         -orientation,
+         -property_type,
+         -response,
+         -site,
+         -title)
+```
+
+
+
+```{r}
+Filtrar por
+price_control
+
+Rinmoscrap::spatial_join_arba()
+
+```
+
