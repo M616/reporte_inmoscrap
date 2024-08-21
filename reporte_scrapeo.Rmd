@@ -110,9 +110,9 @@ summarize_logical <- function(df) {
     
     # Almacenar los resultados en la lista
     results[[col_name]] <- c(
-      "Porcentaje de Nulos" = null_percent,
-      "Porcentaje de TRUE" = true_percent,
-      "Porcentaje de FALSE" = false_percent
+      "% Nulos" = null_percent,
+      "% TRUE" = true_percent,
+      "% FALSE" = false_percent
     )
   }
   
@@ -133,6 +133,19 @@ summarize_logical <- function(df) {
 summarize_logical(inmo)
 ```
 
+```{r, results='asis'}
+
+num_cols <- sapply(inmo, is.numeric)
+df_num <- inmo[, num_cols, drop = FALSE]
+
+
+summarytools::dfSummary(df_num,
+                          plain.ascii  = FALSE, 
+                          style        = "grid", 
+                          graph.magnif = 0.75, 
+                          valid.col    = FALSE,
+                          tmp.img.dir  = "/tmp")
+```
 
 
 
