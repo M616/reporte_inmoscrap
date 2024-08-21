@@ -9,11 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Generar un reporte para la base inmoscrap que permita ver por 
-plataforma y por ditrito el nivel de completitud de las variables.
-Este reporte va a correr con una pre corrida del escraper, 
-alrededor del 20 de cada
-mes.
+Generar un reporte para la base inmoscrap que permita ver por plataforma y por ditrito el nivel de completitud de las variables. Este reporte va a correr con una pre corrida del escraper, alrededor del 20 de cada mes.
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
@@ -41,8 +37,6 @@ drive_download(as_id(id),
 inmo <-  read_csv(temp)
 unlink(temp)
 ```
-
-
 
 ```{r}
 summarize_character_columns <- function(df) {
@@ -80,9 +74,6 @@ summarize_character_columns <- function(df) {
     )
 }
 ```
-
-
-
 
 ```{r}
 summarize_character_columns(inmo)
@@ -125,10 +116,6 @@ summarize_logical <- function(df) {
 }
 ```
 
-
-
-
-
 ```{r}
 summarize_logical(inmo)
 ```
@@ -146,28 +133,6 @@ summarytools::dfSummary(df_num,
                           valid.col    = FALSE,
                           tmp.img.dir  = "/tmp")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ```{r}
 #selecciono y muestro las columnas sobre las cuales se hará el reporte
@@ -210,13 +175,10 @@ ggplot(data_summary, aes(x = site_abbreviation, y = n)) +
 
 ```
 
-
-
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 ap <- inmo |> filter(site_abbreviation=='AP')
 zp <- inmo |> filter(site_abbreviation=='ZP')
 ml <- inmo |> filter(site_abbreviation=='ML')
 ```
-
 
 Argenprop
