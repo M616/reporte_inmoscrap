@@ -19,12 +19,22 @@ mes.
 library(tidyverse)
 library(Rinmoscrap)
 library(googledrive)
+library(scales)
+library(summarytools)
+library(kableExtra)
+
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
+
+#esto saca la notacion cientifica en todo el entorno
+options(scipen = 999)
+
+#agosto24
+id <- '1YRPebxBQQczJr2qgUytQe4Lv7QbQfSgU'
 temp <- tempfile()
 
-drive_download(as_id(id_julio24),
+drive_download(as_id(id),
                path = temp , 
                overwrite = TRUE)
 
@@ -32,28 +42,168 @@ inmo <-  read_csv(temp)
 unlink(temp)
 ```
 
+
+
+```{r}
+summarize_character_columns <- function(df) {
+  # Verificar si df es un data frame
+  if (!is.data.frame(df)) {
+    stop("El argumento debe ser un data frame.")
+  }
+  
+  # Seleccionar solo las columnas de carácter
+  df_char <- df %>%
+    select_if(is.character)
+  
+  # Verificar si hay columnas de carácter en el data frame
+  if (ncol(df_char) == 0) {
+    stop("No hay columnas de carácter en el data frame.")
+  }
+  
+  # Calcular el porcentaje de valores nulos y cantidad de valores únicos
+  summary_df <- data.frame(
+   # Column = names(df_char),
+    Percentage_NA = sapply(df_char, function(col) mean(is.na(col)) * 100),
+    Unique_Values = sapply(df_char, function(col) length(unique(col[!is.na(col)])))
+  )
+  
+  # Crear una tabla HTML bonita usando kable
+  summary_df %>%
+    kable(
+      format = "html", 
+      col.names = c("Percentage of NAs (%)", "Unique Values"),
+      caption = "Summary of Missing Values and Unique Values by Character Column"
+    ) %>%
+    kable_styling(
+      bootstrap_options = c("striped", "hover", "responsive"),
+      full_width = FALSE
+    )
+}
+```
+
+
+
+
+```{r}
+summarize_character_columns(inmo)
+```
+
+```{r}
+
+summarize_logical <- function(df) {
+  # Filtrar las columnas lógicas
+  log_cols <- sapply(df, is.logical)
+  df_logical <- df[, log_cols, drop = FALSE]
+  
+  # Crear una lista para almacenar los resultados
+  results <- list()
+  
+  # Iterar sobre las columnas lógicas
+  for (col_name in names(df_logical)) {
+    col <- df_logical[[col_name]]
+    
+    # Calcular el porcentaje de valores nulos, TRUE y FALSE
+    total_count <- length(col)
+    null_percent <- sum(is.na(col)) / total_count * 100
+    true_percent <- sum(col, na.rm = TRUE) / total_count * 100
+    false_percent <- 100 - true_percent - null_percent
+    
+    # Almacenar los resultados en la lista
+    results[[col_name]] <- c(
+      "Porcentaje de Nulos" = null_percent,
+      "Porcentaje de TRUE" = true_percent,
+      "Porcentaje de FALSE" = false_percent
+    )
+  }
+  
+  # Convertir la lista de resultados a un dataframe
+  results_df <- do.call(rbind, results)
+  results_df <- as.data.frame(results_df)
+  
+  # Mostrar el dataframe con kable en formato HTML
+  kable(results_df, format = "html", caption = "Porcentajes de valores en columnas lógicas")
+}
+```
+
+
+
+
+
+```{r}
+summarize_logical(inmo)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```{r}
 #selecciono y muestro las columnas sobre las cuales se hará el reporte
-inmo <- 
-  inmo |> 
-  select(-`_validation`,
-         -advertiser_id,
-         -disposition,
-         -luminosity,
-         -orientation,
-         -property_type,
-         -response,
-         -site,
-         -title)
+#inmo <- 
+#  inmo |> 
+#  select(-`_validation`,
+#         -advertiser_id,
+#         -disposition,
+#         -luminosity,
+#         -orientation,
+#         -property_type,
+#         -response,
+#         -site,
+#         -title)
+#         
+#         
+
+# Calcular la frecuencia absoluta y porcentajes
+data_summary <- 
+  inmo %>%
+  count(site_abbreviation) %>%
+  mutate(percentage = n / sum(n) * 100) |> 
+  arrange(desc(n)) %>%
+  mutate(site_abbreviation= factor(site_abbreviation, levels = site_abbreviation))
+
+
+# Crear el gráfico
+ggplot(data_summary, aes(x = site_abbreviation, y = n)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  geom_text(aes(label = paste0(n, " (", round(percentage, 1), "%)")),
+            vjust = -0.5, size = 3.5) +  
+  labs(x = "Plataforma", y = "Cantidad de avisos",
+       title = "Cantidad de avisos por plataforma") +
+  theme_minimal()+
+  theme(axis.text.y = element_blank())
+
+
+
+
+
 ```
 
 
 
-```{r}
-Filtrar por
-price_control
-
-Rinmoscrap::spatial_join_arba()
-
+```{r message=FALSE, warning=FALSE, include=FALSE}
+ap <- inmo |> filter(site_abbreviation=='AP')
+zp <- inmo |> filter(site_abbreviation=='ZP')
+ml <- inmo |> filter(site_abbreviation=='ML')
 ```
 
+
+Argenprop
