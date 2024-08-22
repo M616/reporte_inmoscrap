@@ -359,7 +359,13 @@ zp <- inmo |> filter(site_abbreviation=='ZP')
 ml <- inmo |> filter(site_abbreviation=='ML')
 ```
 
-#                        **Argenprop**![](https://static.tokkobroker.com/static/img/appexchange/portales/argenprop.jpg?20220805135502)
+#                   
+
+<div style="text-align: center;">
+  <a href="https://www.tokkobroker.com">
+    <img src="https://static.tokkobroker.com/static/img/appexchange/portales/argenprop.jpg?20220805135502" alt="Descripción de la Imagen" width="273"/>
+  </a>
+</div>
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
 summarize_character(ap)
@@ -368,9 +374,12 @@ summarize_numerical(ap)
 summarize_date(ap)
 ```
 
-#                         Zonaprop
 
-![](https://play-lh.googleusercontent.com/gjTzwtjGhJ70U3LL_yuVug2_MKMU7ZMedTq85BFVo4UGOdk4UT1BoQAxbAYCghNlTXQ)
+<div style="text-align: center;">
+  <a href="https://play.google.com/store/apps/details?id=com.example">
+    <img src="https://play-lh.googleusercontent.com/gjTzwtjGhJ70U3LL_yuVug2_MKMU7ZMedTq85BFVo4UGOdk4UT1BoQAxbAYCghNlTXQ" alt="Descripción de la Imagen" width="273"/>
+  </a>
+</div>
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 summarize_character(zp)
@@ -379,9 +388,12 @@ summarize_numerical(zp)
 summarize_date(zp)
 ```
 
-#                   Mercado Libre
 
-![](https://cdn.forbes.com.mx/2018/11/mercado_libre.jpg1_-640x360.jpg){width="455"}
+<div style="text-align: center;">
+  <a href="https://www.forbes.com.mx">
+    <img src="https://cdn.forbes.com.mx/2018/11/mercado_libre.jpg1_-640x360.jpg" alt="Descripción de la Imagen" width="273"/>
+  </a>
+</div>
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
