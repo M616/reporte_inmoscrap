@@ -44,11 +44,11 @@ unlink(temp)
 
 Variables 
 
-```{r}
+```{r echo=FALSE}
 nrow(inmo)
 names(inmo)
 ```
-```{r}
+```{r include=FALSE}
 
 numericas <- c(#'advertiser_id',
                'age',
@@ -126,7 +126,7 @@ logicas <-
 
 
 
-```{r}
+```{r include=FALSE}
 summarize_character_columns <- function(df) {
   
   # Seleccionar solo las columnas de carácter
@@ -160,11 +160,11 @@ summarize_character_columns <- function(df) {
 }
 ```
 
-```{r}
+```{r echo=FALSE}
 summarize_character_columns(inmo)
 ```
 
-```{r}
+```{r include=FALSE}
 
 summarize_logical <- function(df) {
   # Filtrar las columnas lógicas
@@ -207,12 +207,13 @@ summarize_logical <- function(df) {
 }
 ```
 
-```{r}
+```{r echo=FALSE}
 summarize_logical(inmo)
 ```
 
 
-```{r}
+
+```{r include=FALSE}
 summarize_numerical <- function(df) {
   # Filtrar las columnas numéricas
   df_numeric <- df[, numericas]
@@ -271,7 +272,13 @@ summarize_numerical <- function(df) {
 ```
 
 
-```{r}
+```{r echo=FALSE}
+summarize_numerical(inmo)
+```
+
+
+
+```{r include=FALSE}
 summarize_date <- function(df) {
   # Filtrar las columnas de fecha
   df_date <- df[, fechas]
@@ -331,7 +338,6 @@ summarize_date <- function(df) {
   as.Date(x)
     })
   
-  print(results_df)
   # Mostrar el dataframe con kable en formato HTML
   results_df %>%
     arrange(desc(`Nulos(%)`)) %>%
@@ -348,70 +354,13 @@ summarize_date <- function(df) {
 
 
 
-```{r}
+```{r echo=FALSE}
 summarize_date(inmo)
 ```
 
 
 
-
-
-```{r, results='asis'}
-
-num_cols <- sapply(inmo, is.numeric)
-df_num <- inmo[, num_cols, drop = FALSE]
-
-
-summarytools::dfSummary(df_num,
-                          plain.ascii  = FALSE, 
-                          style        = "grid", 
-                          graph.magnif = 0.75, 
-                          valid.col    = FALSE,
-                          tmp.img.dir  = "/tmp")
-```
-
-```{r}
-#selecciono y muestro las columnas sobre las cuales se hará el reporte
-#inmo <- 
-#  inmo |> 
-#  select(-`_validation`,
-#         -advertiser_id,
-#         -disposition,
-#         -luminosity,
-#         -orientation,
-#         -property_type,
-#         -response,
-#         -site,
-#         -title)
-#         
-#         
-
-# Calcular la frecuencia absoluta y porcentajes
-data_summary <- 
-  inmo %>%
-  count(site_abbreviation) %>%
-  mutate(percentage = n / sum(n) * 100) |> 
-  arrange(desc(n)) %>%
-  mutate(site_abbreviation= factor(site_abbreviation, levels = site_abbreviation))
-
-
-# Crear el gráfico
-ggplot(data_summary, aes(x = site_abbreviation, y = n)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  geom_text(aes(label = paste0(n, " (", round(percentage, 1), "%)")),
-            vjust = -0.5, size = 3.5) +  
-  labs(x = "Plataforma", y = "Cantidad de avisos",
-       title = "Cantidad de avisos por plataforma") +
-  theme_minimal()+
-  theme(axis.text.y = element_blank())
-
-
-
-
-
-```
-
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 ap <- inmo |> filter(site_abbreviation=='AP')
 zp <- inmo |> filter(site_abbreviation=='ZP')
 ml <- inmo |> filter(site_abbreviation=='ML')
