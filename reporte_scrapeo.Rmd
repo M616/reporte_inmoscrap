@@ -36,18 +36,101 @@ drive_download(as_id(id),
 
 inmo <-  read_csv(temp)
 unlink(temp)
+
+
+
+
 ```
+
+Variables 
+
+```{r}
+nrow(inmo)
+names(inmo)
+```
+```{r}
+
+numericas <- c(#'advertiser_id',
+               'age',
+               'bath_amnt',
+               'bed_amnt',
+               'bed_ratio',
+               'covered_ratio',
+               'covered_surface',
+               'garage_amnt',
+               'land_ratio',
+               'land_surface',
+               'latitude',
+               'longitude',
+               'maintenance_fee',
+               'price',
+               'reconstructed_land_surface',
+               'reconstructed_total_surface',
+               'room_amnt',
+               'room_ratio',
+               'toilet_amnt',
+               'total_ratio',
+               'total_surface',
+               'uncovered_surface',
+               'year_built'
+               )
+               
+
+categoricas <- 
+  c('address',
+    'advertiser_name',
+    'covered_surface_unit',
+    'currency', 
+    'description',
+    'disposition',
+    'district', 
+    'features', 
+    'land_surface_unit',
+    'listing_age',
+    'listing_id', 
+    'luminosity',
+    'maintenance_fee_currency', 
+    'neighborhood', 
+    'orientation',
+    'property_group', 
+    'property_type', 
+    'province', 
+    'reconstructed_land_surface_unit', 
+    'reconstructed_total_surface_unit', 
+    'site', 
+    'site_abbreviation', 
+    'title', 
+    'total_surface_unit',
+    'transaction', 
+    'uncovered_surface_unit', 
+    'url',
+    'advertiser_id'
+    )
+
+
+fechas <- 
+  c('date_extracted',
+    'date_published'
+    )
+
+logicas <-
+  c('_validation',
+    'is_finished_property',
+    'is_new_property',
+    'is_studio_apartment',
+    'price_control',
+    'response')
+
+```
+
+
+
 
 ```{r}
 summarize_character_columns <- function(df) {
-  # Verificar si df es un data frame
-  if (!is.data.frame(df)) {
-    stop("El argumento debe ser un data frame.")
-  }
   
   # Seleccionar solo las columnas de carácter
-  df_char <- df %>%
-    select_if(is.character)
+  df_char <- df[,categoricas]
   
   # Verificar si hay columnas de carácter en el data frame
   if (ncol(df_char) == 0) {
@@ -63,10 +146,12 @@ summarize_character_columns <- function(df) {
   
   # Crear una tabla HTML bonita usando kable
   summary_df %>%
+    arrange(desc(Percentage_NA)) |> 
     kable(
       format = "html", 
-      col.names = c("Percentage of NAs (%)", "Unique Values"),
-      caption = "Summary of Missing Values and Unique Values by Character Column"
+      col.names = c("Porcentaje de nulos (%)", "Valores únicos"),
+      caption = "Porcentaje de nulos y valores únicos de las variables de
+      caracter"
     ) %>%
     kable_styling(
       bootstrap_options = c("striped", "hover", "responsive"),
@@ -83,8 +168,7 @@ summarize_character_columns(inmo)
 
 summarize_logical <- function(df) {
   # Filtrar las columnas lógicas
-  log_cols <- sapply(df, is.logical)
-  df_logical <- df[, log_cols, drop = FALSE]
+  df_logical <- df[, logicas]
   
   # Crear una lista para almacenar los resultados
   results <- list()
@@ -101,9 +185,9 @@ summarize_logical <- function(df) {
     
     # Almacenar los resultados en la lista
     results[[col_name]] <- c(
-      "% Nulos" = null_percent,
-      "% TRUE" = true_percent,
-      "% FALSE" = false_percent
+      "Nulos(%)" = null_percent,
+      "TRUE(%)" = true_percent,
+      "FALSE(%)" = false_percent
     )
   }
   
@@ -112,13 +196,165 @@ summarize_logical <- function(df) {
   results_df <- as.data.frame(results_df)
   
   # Mostrar el dataframe con kable en formato HTML
-  kable(results_df, format = "html", caption = "Porcentajes de valores en columnas lógicas")
+    results_df |> 
+      arrange(desc(`Nulos(%)`)) |> 
+      kable(
+        format = "html",
+        caption = "Porcentajes de valores en columnas lógicas") |> 
+      kable_styling(bootstrap_options = c("striped", "hover", "responsive"),
+                    full_width = FALSE )
+    
 }
 ```
 
 ```{r}
 summarize_logical(inmo)
 ```
+
+
+```{r}
+summarize_numerical <- function(df) {
+  # Filtrar las columnas numéricas
+  df_numeric <- df[, numericas]
+  
+  # Crear una lista para almacenar los resultados
+  results <- list()
+  
+  # Función para calcular la moda
+  calculate_mode <- function(x) {
+    uniq_x <- unique(x)
+    uniq_x[which.max(tabulate(match(x, uniq_x)))]
+  }
+  
+  # Iterar sobre las columnas numéricas
+  for (col_name in names(df_numeric)) {
+    col <- df_numeric[[col_name]]
+    
+    # Calcular estadísticas
+    total_count <- length(col)
+    null_percent <- sum(is.na(col)) / total_count * 100
+    mean_value <- mean(col, na.rm = TRUE)
+    sd_value <- sd(col, na.rm = TRUE)
+    median_value <- median(col, na.rm = TRUE)
+    mode_value <- calculate_mode(col[!is.na(col)])
+    quartiles <- quantile(col, na.rm = TRUE)
+    max_ <- max(col, na.rm = TRUE)
+    min_ <- min(col, na.rm = TRUE)
+    # Almacenar los resultados en la lista
+    results[[col_name]] <- c(
+      "Nulos(%)" = null_percent,
+      "Media" = mean_value,
+      "Mediana" = median_value,
+      "Moda" = mode_value,
+      "Desvío estándar" = sd_value,
+      "Cuartil 1" = quartiles["25%"],
+      "Cuartil 3" = quartiles["75%"],
+      "Max" = max_,
+      "Min" = min_
+    )
+  }
+  
+  # Convertir la lista de resultados a un dataframe
+  results_df <- do.call(rbind, results)
+  results_df <- as.data.frame(results_df)
+  
+  # Mostrar el dataframe con kable en formato HTML
+  results_df |> 
+    arrange(desc(`Nulos(%)`)) |> 
+    kable(
+      format = "html",
+      caption = "Estadísticas descriptivas para columnas numéricas") |> 
+    kable_styling(bootstrap_options = c("striped", "hover", "responsive"),
+                  full_width = FALSE)
+}
+
+```
+
+
+```{r}
+summarize_date <- function(df) {
+  # Filtrar las columnas de fecha
+  df_date <- df[, fechas]
+  
+  # Crear una lista para almacenar los resultados
+  results_list <- list()
+  
+  # Función para calcular la moda (más frecuente)
+  calculate_mode <- function(x) {
+    uniq_x <- unique(x)
+    uniq_x[which.max(tabulate(match(x, uniq_x)))]
+  }
+  
+  # Iterar sobre las columnas de fecha
+  for (col_name in names(df_date)) {
+    col <- df_date[[col_name]]
+    
+    # Intentar convertir la columna a Date, capturando posibles errores
+    col <- as.Date(col, format = "%Y-%m-%d")
+    
+    # Calcular estadísticas solo si la columna tiene al menos una fecha válida
+    if (any(!is.na(col))) {
+      total_count <- length(col)
+      null_percent <- sum(is.na(col)) / total_count * 100
+      min_date <- ifelse(all(is.na(col)), NA, min(col, na.rm = TRUE))
+      max_date <- ifelse(all(is.na(col)), NA, max(col, na.rm = TRUE))
+      mode_date <- if (any(!is.na(col))) calculate_mode(col[!is.na(col)]) else NA
+      
+      # Formatear las fechas para asegurar que se muestren correctamente
+      min_date_formatted <- if (!is.na(min_date)) as.Date(min_date) else NA
+      max_date_formatted <- if (!is.na(max_date)) as.Date(max_date) else NA
+      mode_date_formatted <- if (!is.na(mode_date)) as.Date(mode_date) else NA
+      
+      # Almacenar los resultados en la lista
+      results_list[[col_name]] <- c(
+        "Nulos(%)" = null_percent,
+        "Fecha Mínima" = min_date_formatted,
+        "Fecha Máxima" = max_date_formatted,
+        "Moda" = mode_date_formatted
+      )
+    } else {
+      # Si la columna no tiene fechas válidas, registrar NA para todas las estadísticas
+      results_list[[col_name]] <- c(
+        "Nulos(%)" = 100,
+        "Fecha Mínima" = NA,
+        "Fecha Máxima" = NA,
+        "Moda" = NA
+      )
+    }
+  }
+  
+  # Convertir la lista de resultados a un dataframe
+  results_df <- do.call(rbind, results_list)
+  results_df <- as.data.frame(results_df, stringsAsFactors = FALSE)
+
+  results_df[, 2:4] <- lapply(results_df[, 2:4], function(x) {
+  as.Date(x)
+    })
+  
+  print(results_df)
+  # Mostrar el dataframe con kable en formato HTML
+  results_df %>%
+    arrange(desc(`Nulos(%)`)) %>%
+    kable(
+      format = "html",
+      caption = "Estadísticas descriptivas para columnas de fechas"
+    ) %>%
+    kable_styling(bootstrap_options = c("striped", "hover", "responsive"),
+                  full_width = FALSE)
+}
+
+```
+
+
+
+
+```{r}
+summarize_date(inmo)
+```
+
+
+
+
 
 ```{r, results='asis'}
 
