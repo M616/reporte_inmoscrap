@@ -1,7 +1,7 @@
 ---
 title: "Reporte Scrapeo"
 author: "LINTA - CIC"
-date: "Agosto 2024"
+date: "`r format(Sys.Date(), '%B %Y')`"
 output: html_document
 ---
 
@@ -44,12 +44,13 @@ unlink(temp)
 
 ```
 
-Variables 
+Variables
 
 ```{r echo=FALSE}
 nrow(inmo)
 names(inmo)
 ```
+
 ```{r include=FALSE}
 
 numericas <- c(#'advertiser_id',
@@ -125,11 +126,8 @@ logicas <-
 
 ```
 
-
-
-
 ```{r include=FALSE}
-summarize_character_columns <- function(df) {
+summarize_character <- function(df) {
   
   # Seleccionar solo las columnas de carácter
   df_char <- df[,categoricas]
@@ -164,7 +162,7 @@ summarize_character_columns <- function(df) {
 ```
 
 ```{r echo=FALSE}
-summarize_character_columns(inmo)
+summarize_character(inmo)
 ```
 
 ```{r include=FALSE}
@@ -215,8 +213,6 @@ summarize_logical <- function(df) {
 summarize_logical(inmo)
 ```
 
-
-
 ```{r include=FALSE}
 summarize_numerical <- function(df) {
   # Filtrar las columnas numéricas
@@ -248,15 +244,15 @@ summarize_numerical <- function(df) {
     # Almacenar los resultados en la lista
     results[[col_name]] <- c(
       "Nulos(%)" = null_percent,
-      "Media" = mean_value,
-      "Mediana" = median_value,
+      "Min" = min_,
+      "Cuartil" = quartiles["25%"],
       "Moda" = mode_value,
+      "Mediana" = median_value,
+      "Media" = mean_value,
+      "Cuartil" = quartiles["75%"],
       "Desvío estándar" = sd_value,
-      "Cuartil 1" = quartiles["25%"],
-      "Cuartil 3" = quartiles["75%"],
-      "Max" = max_,
-      "Min" = min_
-    )
+      "Max" = max_
+      )
   }
   
   # Convertir la lista de resultados a un dataframe
@@ -276,12 +272,9 @@ summarize_numerical <- function(df) {
 
 ```
 
-
 ```{r echo=FALSE}
 summarize_numerical(inmo)
 ```
-
-
 
 ```{r include=FALSE}
 summarize_date <- function(df) {
@@ -356,19 +349,40 @@ summarize_date <- function(df) {
 
 ```
 
-
-
-
 ```{r echo=FALSE}
 summarize_date(inmo)
 ```
 
-
-
-```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 ap <- inmo |> filter(site_abbreviation=='AP')
 zp <- inmo |> filter(site_abbreviation=='ZP')
 ml <- inmo |> filter(site_abbreviation=='ML')
 ```
 
 Argenprop
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+summarize_character(ap)
+summarize_logical(ap)
+summarize_numerical(ap)
+summarize_date(ap)
+```
+
+Zonaprop
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+summarize_character(zp)
+summarize_logical(zp)
+summarize_numerical(zp)
+summarize_date(zp)
+```
+
+Mercado Libre
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+summarize_character(ml)
+summarize_logical(ml)
+summarize_numerical(ml)
+summarize_date(ml)
+```
