@@ -25,6 +25,8 @@ library(kableExtra)
 
 #esto saca la notacion cientifica en todo el entorno
 options(scipen = 999)
+# Establecer el número de dígitos decimales a 1
+#options(digits = 1)
 
 #agosto24
 id <- '1YRPebxBQQczJr2qgUytQe4Lv7QbQfSgU'
@@ -151,13 +153,14 @@ summarize_character_columns <- function(df) {
       format = "html", 
       col.names = c("Porcentaje de nulos (%)", "Valores únicos"),
       caption = "Porcentaje de nulos y valores únicos de las variables de
-      caracter"
-    ) %>%
+      caracter",
+      digits = 1      ) %>%
     kable_styling(
       bootstrap_options = c("striped", "hover", "responsive"),
       full_width = FALSE
     )
 }
+
 ```
 
 ```{r echo=FALSE}
@@ -200,7 +203,8 @@ summarize_logical <- function(df) {
       arrange(desc(`Nulos(%)`)) |> 
       kable(
         format = "html",
-        caption = "Porcentajes de valores en columnas lógicas") |> 
+        caption = "Porcentajes de valores en columnas lógicas",
+        digits = 1) |> 
       kable_styling(bootstrap_options = c("striped", "hover", "responsive"),
                     full_width = FALSE )
     
@@ -264,7 +268,8 @@ summarize_numerical <- function(df) {
     arrange(desc(`Nulos(%)`)) |> 
     kable(
       format = "html",
-      caption = "Estadísticas descriptivas para columnas numéricas") |> 
+      caption = "Estadísticas descriptivas para columnas numéricas",
+      digits = 1) |> 
     kable_styling(bootstrap_options = c("striped", "hover", "responsive"),
                   full_width = FALSE)
 }
