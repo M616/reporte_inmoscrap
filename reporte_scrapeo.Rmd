@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Base completa
+
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
@@ -23,28 +23,35 @@ library(kableExtra)
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
-#esto saca la notacion cientifica en todo el entorno
-options(scipen = 999)
-# Establecer el número de dígitos decimales a 1
-#options(digits = 1)
-
-#agosto24
 id <- '1YRPebxBQQczJr2qgUytQe4Lv7QbQfSgU'
-temp <- tempfile()
+zip_path <- tempfile(fileext = ".zip")
+unzip_dir <- tempdir()
 
-drive_download(as_id(id),
-               path = temp , 
-               overwrite = TRUE)
+# Descargar el archivo ZIP desde Google Drive
+drive_download(as_id(id), path = zip_path, overwrite = TRUE)
 
-inmo <-  read_csv(temp)
-unlink(temp)
+# Descomprimir el archivo ZIP en el directorio temporal
+unzip(zip_path, exdir = unzip_dir)
 
+# Listar los archivos descomprimidos
+csv_files <- list.files(unzip_dir, pattern = "\\.csv$", full.names = TRUE)
+
+# Leer el primer archivo CSV
+inmo <- read_csv(csv_files[1])
+nombre_archivo <- list.files(unzip_dir, pattern = "\\.csv$", full.names = FALSE)[1]
+
+# Limpieza de archivos temporales
+unlink(zip_path)
 
 
 
 ```
 
-Variables
+# Base completa
+
+Nombre del archivo: `r nombre_archivo`
+
+Cantidad de registros: `r nrow(inmo)`
 
 ```{r echo=FALSE}
 nrow(inmo)
