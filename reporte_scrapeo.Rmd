@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Generar un reporte para la base inmoscrap que permita ver por plataforma y por ditrito el nivel de completitud de las variables. Este reporte va a correr con una pre corrida del escraper, alrededor del 20 de cada mes.
+# Base completa
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
@@ -359,7 +359,7 @@ zp <- inmo |> filter(site_abbreviation=='ZP')
 ml <- inmo |> filter(site_abbreviation=='ML')
 ```
 
-Argenprop
+#                        **Argenprop**![](https://static.tokkobroker.com/static/img/appexchange/portales/argenprop.jpg?20220805135502)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
 summarize_character(ap)
@@ -368,7 +368,9 @@ summarize_numerical(ap)
 summarize_date(ap)
 ```
 
-Zonaprop
+#                         Zonaprop
+
+![](https://play-lh.googleusercontent.com/gjTzwtjGhJ70U3LL_yuVug2_MKMU7ZMedTq85BFVo4UGOdk4UT1BoQAxbAYCghNlTXQ)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 summarize_character(zp)
@@ -377,7 +379,9 @@ summarize_numerical(zp)
 summarize_date(zp)
 ```
 
-Mercado Libre
+#                   Mercado Libre
+
+![](https://cdn.forbes.com.mx/2018/11/mercado_libre.jpg1_-640x360.jpg){width="455"}
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
