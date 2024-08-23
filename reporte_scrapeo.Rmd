@@ -9,8 +9,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
 library(Rinmoscrap)
@@ -18,26 +16,31 @@ library(googledrive)
 library(scales)
 library(summarytools)
 library(kableExtra)
-
 ```
 
-<div style="position: absolute; top: 10px; left: 10px;">
-  <a href="https://linta.cic.gba.gob.ar">
-    <img src="https://linta.cic.gba.gob.ar/wp-content/uploads/sites/6/elementor/thumbs/LOGO-LINTA-definitivo-blanco-qguufoez9o65t33l2j72d74lnf37kosm1qd1yn3fgg.jpg" 
-         alt="Logo LINTA" 
-         width="273" /> 
-  </a>
+<!-- Imágenes en la esquina superior derecha, una debajo de la otra con espacio entre ellas -->
+
+::: {style="position: absolute; top: 10px; right: 10px; z-index: 1000;"}
+<!-- Imagen de LINTA -->
+
+::: {style="margin-bottom: 20px;"}
+<a href="https://linta.cic.gba.gob.ar"> <img src="https://linta.cic.gba.gob.ar/wp-content/uploads/sites/6/elementor/thumbs/LOGO-LINTA-definitivo-blanco-qguufoez9o65t33l2j72d74lnf37kosm1qd1yn3fgg.jpg" alt="Logo LINTA" width="273"/> </a>
+:::
+
+<!-- Imagen del Observatorio -->
+
+<div>
+
+<a href="https://observatoriosuelo.gba.gob.ar"> <img src="https://observatoriosuelo.gba.gob.ar/sites/default/files/2023-09/Logo%20-%20OVS%2001%20%281%29.webp" alt="Logo Observatorio" width="273"/> </a>
+
 </div>
+:::
 
-<div style="position: absolute; top: 10px; right: 10px;">
-  <a href="https://play.google.com/store/apps/details?id=com.example">
-    <img src="https://observatoriosuelo.gba.gob.ar/sites/default/files/2023-09/Logo%20-%20OVS%2001%20%281%29.webp" 
-         alt="Descripción de la Imagen" 
-         width="273" /> 
-  </a>
-</div>
+<!-- Contenedor principal con margen superior -->
 
+<div style="margin-top: 150px;">
 
+<!-- Ajustar el margen según sea necesario -->
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
@@ -384,13 +387,11 @@ zp <- inmo |> filter(site_abbreviation=='ZP')
 ml <- inmo |> filter(site_abbreviation=='ML')
 ```
 
-#                   
+# 
 
-<div style="text-align: center;">
-  <a href="https://www.tokkobroker.com">
-    <img src="https://static.tokkobroker.com/static/img/appexchange/portales/argenprop.jpg?20220805135502" alt="Descripción de la Imagen" width="273"/>
-  </a>
-</div>
+::: {style="text-align: center;"}
+<a href="https://www.tokkobroker.com"> <img src="https://static.tokkobroker.com/static/img/appexchange/portales/argenprop.jpg?20220805135502" alt="Descripción de la Imagen" width="273"/> </a>
+:::
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
 summarize_character(ap)
@@ -399,12 +400,9 @@ summarize_numerical(ap)
 summarize_date(ap)
 ```
 
-
-<div style="text-align: center;">
-  <a href="https://play.google.com/store/apps/details?id=com.example">
-    <img src="https://play-lh.googleusercontent.com/gjTzwtjGhJ70U3LL_yuVug2_MKMU7ZMedTq85BFVo4UGOdk4UT1BoQAxbAYCghNlTXQ" alt="Descripción de la Imagen" width="273"/>
-  </a>
-</div>
+::: {style="text-align: center;"}
+<a href="https://play.google.com/store/apps/details?id=com.example"> <img src="https://play-lh.googleusercontent.com/gjTzwtjGhJ70U3LL_yuVug2_MKMU7ZMedTq85BFVo4UGOdk4UT1BoQAxbAYCghNlTXQ" alt="Descripción de la Imagen" width="273"/> </a>
+:::
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 summarize_character(zp)
@@ -413,12 +411,9 @@ summarize_numerical(zp)
 summarize_date(zp)
 ```
 
-
-<div style="text-align: center;">
-  <a href="https://www.forbes.com.mx">
-    <img src="https://cdn.forbes.com.mx/2018/11/mercado_libre.jpg1_-640x360.jpg" alt="Descripción de la Imagen" width="273"/>
-  </a>
-</div>
+::: {style="text-align: center;"}
+<a href="https://www.forbes.com.mx"> <img src="https://cdn.forbes.com.mx/2018/11/mercado_libre.jpg1_-640x360.jpg" alt="Descripción de la Imagen" width="273"/> </a>
+:::
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
