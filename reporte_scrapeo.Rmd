@@ -74,7 +74,6 @@ Nombre del archivo: `r nombre_archivo`
 Cantidad de registros: `r nrow(inmo)`
 
 ```{r echo=FALSE}
-nrow(inmo)
 names(inmo)
 ```
 
