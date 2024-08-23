@@ -109,6 +109,36 @@ inmo %>%
         legend.position = "none")
 ```
 
+```{r echo = FALSE}
+inmo %>%
+  count(district) %>%
+  arrange(desc(n)) %>%
+  slice_head(n = 15) %>%  # Seleccionar los primeros 15 distritos
+  ggplot(aes(x = reorder(district, n), y = n, fill = district)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = 1.1, size = 4, color = "black") +  # Ajustar etiquetas
+  coord_flip() +  # Cambiar la orientación del gráfico a horizontal
+  #scale_fill_brewer(palette = "Set3") +  # Usar una paleta de colores atractiva
+  theme(
+    panel.background = element_rect(fill = "gray90"),  # Cambiar color de fondo del panel
+    plot.background = element_rect(fill = "gray90"),   # Cambiar color de fondo del gráfico
+    panel.grid.major = element_line(color = "gray80"),  # Cambiar color de la cuadrícula principal
+    panel.grid.minor = element_line(color = "gray90"),  # Cambiar color de la cuadrícula secundaria
+    axis.text.x = element_blank(),  # Quitar etiquetas del eje x
+    axis.text.y = element_text(size = 12),
+    axis.title = element_text(size = 12),
+    plot.title = element_text(size = 16, face = "bold"),
+    legend.position = "none"
+  ) +
+  labs(title = 'Cantidad de Avisos por "District" en los 15 
+       con mayor frecuencia',
+       x = "Cantidad de Avisos",
+       y = "District",
+       caption = 'Variable "district" nativa de los portales')
+
+```
+
+
 
 
 ```{r include=FALSE}
@@ -426,6 +456,37 @@ ml <- inmo |> filter(site_abbreviation=='ML')
 :::
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+ap %>%
+  count(district) %>%
+  arrange(desc(n)) %>%
+  slice_head(n = 15) %>%  # Seleccionar los primeros 15 distritos
+  ggplot(aes(x = reorder(district, n), y = n, fill = district)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = 1.1, size = 4, color = "black") +  # Ajustar etiquetas
+  coord_flip() +  # Cambiar la orientación del gráfico a horizontal
+  #scale_fill_brewer(palette = "Set3") +  # Usar una paleta de colores atractiva
+  theme(
+    panel.background = element_rect(fill = "gray90"),  # Cambiar color de fondo del panel
+    plot.background = element_rect(fill = "gray90"),   # Cambiar color de fondo del gráfico
+    panel.grid.major = element_line(color = "gray80"),  # Cambiar color de la cuadrícula principal
+    panel.grid.minor = element_line(color = "gray90"),  # Cambiar color de la cuadrícula secundaria
+    axis.text.x = element_blank(),  # Quitar etiquetas del eje x
+    axis.text.y = element_text(size = 12),
+    axis.title = element_text(size = 12),
+    plot.title = element_text(size = 16, face = "bold"),
+    legend.position = "none"
+  ) +
+  labs(title = 'Cantidad de Avisos por "District" en los 15 
+       con mayor frecuencia',
+       x = "Cantidad de Avisos",
+       y = "District",
+       caption = 'Variable "district" nativa de los portales')
+
+```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
 summarize_character(ap)
 summarize_logical(ap)
 summarize_numerical(ap)
@@ -435,6 +496,37 @@ summarize_date(ap)
 ::: {style="text-align: center;"}
 <a href="https://play.google.com/store/apps/details?id=com.example"> <img src="https://play-lh.googleusercontent.com/gjTzwtjGhJ70U3LL_yuVug2_MKMU7ZMedTq85BFVo4UGOdk4UT1BoQAxbAYCghNlTXQ" alt="Descripción de la Imagen" width="273"/> </a>
 :::
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+zp %>%
+  count(district) %>%
+  arrange(desc(n)) %>%
+  slice_head(n = 15) %>%  # Seleccionar los primeros 15 distritos
+  ggplot(aes(x = reorder(district, n), y = n, fill = district)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = 1.1, size = 4, color = "black") +  # Ajustar etiquetas
+  coord_flip() +  # Cambiar la orientación del gráfico a horizontal
+  #scale_fill_brewer(palette = "Set3") +  # Usar una paleta de colores atractiva
+  theme(
+    panel.background = element_rect(fill = "gray90"),  # Cambiar color de fondo del panel
+    plot.background = element_rect(fill = "gray90"),   # Cambiar color de fondo del gráfico
+    panel.grid.major = element_line(color = "gray80"),  # Cambiar color de la cuadrícula principal
+    panel.grid.minor = element_line(color = "gray90"),  # Cambiar color de la cuadrícula secundaria
+    axis.text.x = element_blank(),  # Quitar etiquetas del eje x
+    axis.text.y = element_text(size = 12),
+    axis.title = element_text(size = 12),
+    plot.title = element_text(size = 16, face = "bold"),
+    legend.position = "none"
+  ) +
+  labs(title = 'Cantidad de Avisos por "District" en los 15 
+       con mayor frecuencia',
+       x = "Cantidad de Avisos",
+       y = "District",
+       caption = 'Variable "district" nativa de los portales')
+
+```
+
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 summarize_character(zp)
@@ -446,6 +538,35 @@ summarize_date(zp)
 ::: {style="text-align: center;"}
 <a href="https://www.forbes.com.mx"> <img src="https://cdn.forbes.com.mx/2018/11/mercado_libre.jpg1_-640x360.jpg" alt="Descripción de la Imagen" width="273"/> </a>
 :::
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+ml %>%
+  count(district) %>%
+  arrange(desc(n)) %>%
+  slice_head(n = 15) %>%  # Seleccionar los primeros 15 distritos
+  ggplot(aes(x = reorder(district, n), y = n, fill = district)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = 1.1, size = 4, color = "black") +  # Ajustar etiquetas
+  coord_flip() +  # Cambiar la orientación del gráfico a horizontal
+  #scale_fill_brewer(palette = "Set3") +  # Usar una paleta de colores atractiva
+  theme(
+    panel.background = element_rect(fill = "gray90"),  # Cambiar color de fondo del panel
+    plot.background = element_rect(fill = "gray90"),   # Cambiar color de fondo del gráfico
+    panel.grid.major = element_line(color = "gray80"),  # Cambiar color de la cuadrícula principal
+    panel.grid.minor = element_line(color = "gray90"),  # Cambiar color de la cuadrícula secundaria
+    axis.text.x = element_blank(),  # Quitar etiquetas del eje x
+    axis.text.y = element_text(size = 12),
+    axis.title = element_text(size = 12),
+    plot.title = element_text(size = 16, face = "bold"),
+    legend.position = "none"
+  ) +
+  labs(title = 'Cantidad de Avisos por "District" en los 15 
+       con mayor frecuencia',
+       x = "Cantidad de Avisos",
+       y = "District",
+       caption = 'Variable "district" nativa de los portales')
+
+```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
