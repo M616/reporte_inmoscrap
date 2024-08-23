@@ -21,9 +21,27 @@ library(kableExtra)
 
 ```
 
+<div style="position: fixed; top: 10px; left: 10px;">
+  <a href="https://linta.cic.gba.gob.ar">
+    <img src="https://linta.cic.gba.gob.ar/wp-content/uploads/sites/6/elementor/thumbs/LOGO-LINTA-definitivo-blanco-qguufoez9o65t33l2j72d74lnf37kosm1qd1yn3fgg.jpg" 
+         alt="Logo LINTA" 
+         width="100" /> <!-- Ajusta el tamaño según sea necesario -->
+  </a>
+</div>
+
+<div style="position: fixed; top: 10px; right: 10px;">
+  <a href="https://play.google.com/store/apps/details?id=com.example">
+    <img src="https://observatoriosuelo.gba.gob.ar/sites/default/files/2023-09/Logo%20-%20OVS%2001%20%281%29.webp" 
+         alt="Descripción de la Imagen" 
+         width="100" /> <!-- Ajusta el tamaño según sea necesario -->
+  </a>
+</div>
+
+
+
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
-id <- '1YRPebxBQQczJr2qgUytQe4Lv7QbQfSgU'
+id <- '138tZiUeCR1HAPISAGaoH-gyXX2hP-JF7'
 zip_path <- tempfile(fileext = ".zip")
 unzip_dir <- tempdir()
 
