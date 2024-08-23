@@ -16,6 +16,12 @@ library(googledrive)
 library(scales)
 library(summarytools)
 library(kableExtra)
+
+#esto saca la notacion cientifica en todo el entorno
+options(scipen = 999)
+# Establecer el número de dígitos decimales a 1
+options(digits = 1)
+
 ```
 
 <!-- Imágenes en la esquina superior derecha, una debajo de la otra con espacio entre ellas -->
@@ -76,6 +82,34 @@ Cantidad de registros: `r nrow(inmo)`
 ```{r echo=FALSE}
 names(inmo)
 ```
+
+```{r echo=FALSE}
+inmo %>%
+  mutate(site_abbreviation = as.factor(site_abbreviation)) %>%
+  count(site_abbreviation) %>%
+  arrange(desc(n)) %>%
+  ggplot(aes(x = reorder(site_abbreviation, n), y = n, fill = site_abbreviation)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = 1.1, size = 4, color = "black") +  # Ajustar etiquetas
+  coord_flip() +  # Cambiar la orientación del gráfico a horizontal
+  scale_fill_brewer(palette = "Set1") +  # Usar una paleta de colores atractiva
+  theme_minimal() +
+  labs(title = "Cantidad de avisos por plataforma",
+       x = "Cantidad de Avisos",
+       y = "Plataforma") +
+  theme(#axis.text.x = element_text(size = 12),
+        axis.text.x = element_blank(),
+        axis.text.y = element_text(size = 12),
+        axis.title = element_text(size = 12),
+        plot.title = element_text(size = 16, face = "bold"),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_line(color = "gray90"),
+        panel.grid.minor.y = element_line(color = "gray90"),
+        legend.position = "none")
+```
+
+
 
 ```{r include=FALSE}
 
