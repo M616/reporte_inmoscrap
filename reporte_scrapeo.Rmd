@@ -22,6 +22,8 @@ options(scipen = 999)
 # Establecer el número de dígitos decimales a 1
 options(digits = 1)
 
+googledrive::drive_auth()
+
 ```
 
 <!-- Imágenes en la esquina superior derecha, una debajo de la otra con espacio entre ellas -->
@@ -49,7 +51,8 @@ options(digits = 1)
 <!-- Ajustar el margen según sea necesario -->
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-id <- '13CGLxgjhCZ1gPDX_bFDncOXST764Nmo4'
+id <- '1O0SxICJErC3HpLpyO5fC4dmn2M1yM3Yj'
+
 zip_path <- tempfile(fileext = ".zip")
 unzip_dir <- tempdir()
 
