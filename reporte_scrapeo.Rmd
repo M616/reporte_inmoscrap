@@ -1,5 +1,5 @@
 ---
-title: "Reporte Scrapeo"
+title: "Reporte base inmoscrap agosto 2024"
 author: "LINTA - CIC"
 date: "`r format(Sys.Date(), '%B %Y')`"
 output: html_document
@@ -51,7 +51,14 @@ googledrive::drive_auth()
 <!-- Ajustar el margen según sea necesario -->
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-id <- '1O0SxICJErC3HpLpyO5fC4dmn2M1yM3Yj'
+#id <- '10p32A7L2FGlKAidUAlXMhu1rnqfgi9AV' #marzo2024
+#id <- '11w20bQHHfiXlTgSNvOcUxkpxd0ozeKYE' #abril2024, #problemas en '_validation'
+#id <- '12NopQAGqo07HZGcXch3lkBuUhCL0GZhk' #mayo2024
+#id <- '12bgxNTqhdly3STJMQSRGueyqt10JxJrR' #junio2024
+#id <- '12iQeiN5L8f2Sy8jMpraAOiqlZhE7JiOJ' #julio2024
+#id <- '1YRPebxBQQczJr2qgUytQe4Lv7QbQfSgU' #agosto2024
+id <- '1p2tWYRhhkjBlOV_q_0BkK9wKQXODOCqD' #precorrida octubre
+
 
 zip_path <- tempfile(fileext = ".zip")
 unzip_dir <- tempdir()
@@ -69,11 +76,12 @@ csv_files <- list.files(unzip_dir, pattern = "\\.csv$", full.names = TRUE)
 inmo <- read_csv(csv_files[1])
 nombre_archivo <- list.files(unzip_dir, pattern = "\\.csv$", full.names = FALSE)[1]
 
+#inmo <- inmo |> filter(property_group == 'Departamento')
+
 # Limpieza de archivos temporales
 unlink(zip_path)
 
-
-
+inmo <- inmo[]
 ```
 
 # Base completa
@@ -141,9 +149,6 @@ inmo %>%
 
 ```
 
-
-
-
 ```{r include=FALSE}
 
 numericas <- c(#'advertiser_id',
@@ -173,7 +178,8 @@ numericas <- c(#'advertiser_id',
                
 
 categoricas <- 
-  c('address',
+  c('_validation',
+    'address',
     'advertiser_name',
     'covered_surface_unit',
     'currency', 
@@ -210,8 +216,7 @@ fechas <-
     )
 
 logicas <-
-  c('_validation',
-    'is_finished_property',
+  c('is_finished_property',
     'is_new_property',
     'is_studio_apartment',
     'price_control',
@@ -487,8 +492,6 @@ ap %>%
 
 ```
 
-
-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
 summarize_character(ap)
 summarize_logical(ap)
@@ -528,8 +531,6 @@ zp %>%
        caption = 'Variable "district" nativa de los portales')
 
 ```
-
-
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 summarize_character(zp)
