@@ -1,5 +1,5 @@
 ---
-title: "Reporte base inmoscrap agosto 2024"
+title: "Reporte base inmoscrap. Pre corrida Dic 2024"
 author: "LINTA - CIC"
 date: "`r format(Sys.Date(), '%B %Y')`"
 output: html_document
@@ -51,13 +51,7 @@ googledrive::drive_auth()
 <!-- Ajustar el margen según sea necesario -->
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-#id <- '10p32A7L2FGlKAidUAlXMhu1rnqfgi9AV' #marzo2024
-#id <- '11w20bQHHfiXlTgSNvOcUxkpxd0ozeKYE' #abril2024, #problemas en '_validation'
-#id <- '12NopQAGqo07HZGcXch3lkBuUhCL0GZhk' #mayo2024
-#id <- '12bgxNTqhdly3STJMQSRGueyqt10JxJrR' #junio2024
-#id <- '12iQeiN5L8f2Sy8jMpraAOiqlZhE7JiOJ' #julio2024
-#id <- '1YRPebxBQQczJr2qgUytQe4Lv7QbQfSgU' #agosto2024
-id <- '1SKQfWVCxX3vwjW4CIG1hmZGYCQH6qm4U' #octubre
+id <- '1C5tHzZlIo1h1chRBI73CydGbTj_0JQqv' #precorrida dic
 
 
 zip_path <- tempfile(fileext = ".zip")
