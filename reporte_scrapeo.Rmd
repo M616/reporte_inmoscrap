@@ -51,7 +51,7 @@ googledrive::drive_auth()
 <!-- Ajustar el margen según sea necesario -->
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-id <- '1C5tHzZlIo1h1chRBI73CydGbTj_0JQqv' #precorrida dic
+id <- '17Wrx1jViAQngdykeE9OhqIdiHa3Xx0DG' #dic2024
 
 
 zip_path <- tempfile(fileext = ".zip")
